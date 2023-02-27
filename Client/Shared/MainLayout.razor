@@ -1,0 +1,41 @@
+﻿@inherits LayoutComponentBase
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme"/>
+<MudDialogProvider CloseOnEscapeKey="true" />
+
+<MudLayout Style="height: 100vh;">
+    <MudAppBar>
+        <MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@open" Elevation="1" Variant="@DrawerVariant.Mini" ClipMode="DrawerClipMode.Always">
+        <MudDrawerHeader>
+            <MudAvatar Style="height:70px; width:70px; font-size:2rem;" Color="Color.Primary">A</MudAvatar>
+        </MudDrawerHeader>
+        <MudNavMenu Style="height: 100vh;">
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Store">Store</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks">Library</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Group">Community</MudNavLink>
+            <MudIconButton Style="position:absolute; bottom: 8px;" Icon="@(open ? Icons.Material.Filled.KeyboardDoubleArrowLeft : Icons.Material.Filled.KeyboardDoubleArrowRight)" Color="Color.Primary" OnClick="ToggleDrawer"></MudIconButton>
+        </MudNavMenu>
+    </MudDrawer>
+
+    <MudMainContent Class="">
+        <MudContainer MaxWidth="MaxWidth.False">
+            <MudPaper Style="background-color:white !important;" Height="var(--mainlayout-height)" Elevation="0" Class="pt-2 mt-2">
+                @Body
+            </MudPaper>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme _theme = new();
+    private bool _isDarkMode;
+
+    bool open = false;
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    }
+}
+
